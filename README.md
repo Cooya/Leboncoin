@@ -2,6 +2,67 @@
 
 This package allows to perform requests on the french e-commerce website "leboncoin.fr". At the moment, it contains 3 simple methods for retrieve items data from the website : search(), get() and watch().
 
+### Usage examples
+
+Perform a search :
+```javascript
+const lbc = require('leboncoin');
+
+const req = {
+	category: 'informatique',
+	type: 'offres',
+	location: 'aquitaine',
+	sellers: 'particuliers',
+	query: 'ordinateur',
+	sort: 'date',
+	titles_only: false,
+	urgent_only: false
+};
+
+lbc.search(req, 1, 5) // browse pages 1 to 5
+.then(function(items) {
+	console.log(items);
+}, function(error) {
+	console.error(error);
+});
+```
+
+Get data from a specific advertisement : 
+```javascript
+const lbc = require('leboncoin');
+
+const req = {
+	category: 'informatique',
+	type: 'offres',
+	location: 'aquitaine',
+	sellers: 'particuliers',
+	query: 'ordinateur',
+	sort: 'date',
+	titles_only: false,
+	urgent_only: false
+};
+
+lbc.get('informatique', 1159809960)
+.then(function(item) {
+	console.log(item);
+}, function(error) {
+	console.error(error);
+});
+```
+
+Watch new objects from a specific category and location :
+```javascript
+const lbc = require('leboncoin');
+
+const req = {
+	category: 'informatique',
+	location: 'aquitaine'
+};
+
+lbc.watch(req, 60, function(item) { // the request is performed every 60 seconds
+	console.log(item);
+});
+```
 
 ### Methods
 
@@ -57,7 +118,7 @@ urgent_only | boolean | search only for urgent ads | false
 -------
 ### Category list
 
-```
+```javascript
 const CATEGORIES = [
 	'_emploi_',
 	'offres_d_emploi',
@@ -135,7 +196,7 @@ const CATEGORIES = [
 -------
 ### Location list
 
-```
+```javascript
 const LOCATIONS = [
 	'alsace',
 	'aquitaine',
