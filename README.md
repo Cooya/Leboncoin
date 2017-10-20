@@ -6,7 +6,7 @@ This package allows to perform requests on the french e-commerce website "Lebonc
 ### Methods
 
 - search(request, minPage, maxPage)
-###### Query a research of items specified by various criterias. Return a promise with an array of items in parameter. ######
+<sub>Query a research of items specified by various criterias. Return a promise with an array of items in parameter.</sub>
 
 Parameter | Type    | Description | Default value
 --------  | ---     | --- | ---
@@ -17,7 +17,7 @@ maxPage   | integer | last page to browse | 1
 
 -------
 - get(category, id)
-###### Get specific item data by its category and id. Return a promise with the item data in parameter. ######
+<sub>Get specific item data by its category and id. Return a promise with the item data in parameter.</sub>
 
 Parameter | Type    | Description | Default value
 --------  | ---     | --- | ---
@@ -27,7 +27,7 @@ id | integer | 10-digit item id | required
 
 -------
 - watch(request, interval, action)
-###### Watching loop for detect new objects added specified by various criterias. Each time a new object is spotted, the function "action" is called with its data in parameter. ######
+<sub>Watching loop for detect new objects added specified by various criterias. Each time a new object is spotted, the function "action" is called with its data in parameter.</sub>
 
 Parameter | Type    | Description | Default value
 --------  | ---     | --- | ---
@@ -97,7 +97,36 @@ const CATEGORIES = [
 	'informatique',
 	'consoles_jeux_video',
 	'image_son',
-	'telephonie'
+	'telephonie',
+	'_loisirs',
+	'dvd_films',
+	'cd_musique',
+	'livres',
+	'animaux',
+	'velos',
+	'sports_hobbies',
+	'instruments_de_musique',
+	'collection',
+	'jeux_jouets',
+	'vins_gastronomie',
+	'_materiel_professionnel',
+	'materiel_agricole',
+	'transport_manutention',
+	'btp_chantier_gros_oeuvre',
+	'outillage_materiaux_2nd_oeuvre',
+	'equipements_industriels',
+	'restauration_hotellerie',
+	'founitures_de_bureau',
+	'commerces_marches',
+	'materiel_medical',
+	'_services_',
+	'prestations_de_service',
+	'billeterie',
+	'evenements',
+	'cours_particuliers',
+	'covoiturage',
+	'_',
+	'autres'
 ];
 ```
 -------
