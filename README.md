@@ -6,6 +6,7 @@ This package allows to perform requests on the french e-commerce website "Lebonc
 ### Methods
 
 - search(request, minPage, maxPage)
+
 <sub>Query a research of items specified by various criterias. Return a promise with an array of items in parameter.</sub>
 
 Parameter | Type    | Description | Default value
@@ -17,6 +18,7 @@ maxPage   | integer | last page to browse | 1
 
 -------
 - get(category, id)
+
 <sub>Get specific item data by its category and id. Return a promise with the item data in parameter.</sub>
 
 Parameter | Type    | Description | Default value
@@ -27,6 +29,7 @@ id | integer | 10-digit item id | required
 
 -------
 - watch(request, interval, action)
+
 <sub>Watching loop for detect new objects added specified by various criterias. Each time a new object is spotted, the function "action" is called with its data in parameter.</sub>
 
 Parameter | Type    | Description | Default value
