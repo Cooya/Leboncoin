@@ -1,0 +1,25 @@
+{
+  "name": "leboncoin",
+  "version": "0.0.1",
+  "description": "HTTP client for leboncoin.fr french e-commerce website",
+  "main": "examples.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "request": "^2.83.0",
+    "system-sleep": "^1.3.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cooya/Leboncoin.git"
+  },
+  "author": "Cooya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cooya/Leboncoin/issues"
+  },
+  "homepage": "https://github.com/Cooya/Leboncoin#readme"
+}
