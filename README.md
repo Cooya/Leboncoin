@@ -1,6 +1,6 @@
 # Leboncoin.fr HTTP client
 
-This package allows to perform requests on the french e-commerce website "Leboncoin.fr". At the moment, it contains 3 simple methods for retrieve items data from the website : search(), get() and watch().
+This package allows to perform requests on the french e-commerce website "leboncoin.fr". At the moment, it contains 3 simple methods for retrieve items data from the website : search(), get() and watch().
 
 
 ### Methods
@@ -44,9 +44,9 @@ action | function | action to execute for process the new object data | required
 
 Field | Type    | Description | Default value
 --------  | ---     | --- | ---
-category | string | category to look in | "tous"
+category | string | category to look in (see category list below) | "tous"
 type | string | type of advertisement ("offres" or "demandes") | "offres"
-location | string | location of the item (see location list) | "dans toute la France"
+location | string | location of the item (see location list below) | "dans toute la France"
 sellers | string | type of sellers ("tous" or "particuliers" or "professionnels" | "tous"
 query | string | matching keywords | none
 sort | string | sort criteria ("date" or "prix") | "date" 
