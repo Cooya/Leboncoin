@@ -279,7 +279,7 @@ function promiseWait(seconds) {
 }
 
 module.exports = {
-	search: function(req, minPage = 1, maxPage = 1) {
+	search: function(req = {}, minPage = 1, maxPage = 1) {
 		return new Promise(function(resolve, reject) {
 			let url;
 			try {
@@ -313,7 +313,7 @@ module.exports = {
 		}
 	},
 
-	watch: function(req, interval, action) {
+	watch: function(req, interval = 60, action) {
 		let url;
 		try {
 			url = convertRequestToUrl(req);
