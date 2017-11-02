@@ -2,11 +2,16 @@
 
 This package allows to perform requests on the french e-commerce website "leboncoin.fr". At the moment, it contains 3 simple methods for retrieve items data from the website : search(), get() and watch().
 
+### Installation
+```
+npm install leboncoin-client
+```
+
 ### Usage examples
 
 Perform a search :
 ```javascript
-const lbc = require('leboncoin');
+const lbc = require('leboncoin-client');
 
 const req = {
     category: 'informatique',
@@ -29,7 +34,7 @@ lbc.search(req, 1, 5) // browse pages 1 to 5
 
 Second search example :
 ```javascript
-const lbc = require('leboncoin');
+const lbc = require('leboncoin-client');
 
 const req = {
    category: 'informatique',
@@ -50,7 +55,7 @@ lbc.search(req) // only the first page
 
 Get data from a specific advertisement : 
 ```javascript
-const lbc = require('leboncoin');
+const lbc = require('leboncoin-client');
 
 lbc.get('informatique', 1159809960)
 .then(function(item) {
@@ -62,7 +67,7 @@ lbc.get('informatique', 1159809960)
 
 Watch new objects from a specific category and location :
 ```javascript
-const lbc = require('leboncoin');
+const lbc = require('leboncoin-client');
 
 const req = {
     category: 'informatique',
