@@ -2,6 +2,67 @@
 
 This package allows to perform requests on the french e-commerce website "leboncoin.fr". At the moment, it contains 3 simple methods for retrieve items data from the website : search(), get() and watch().
 
+### Usage examples
+
+Perform a search :
+```javascript
+const lbc = require('leboncoin');
+
+const req = {
+    category: 'informatique',
+    type: 'offres',
+    location: 'aquitaine',
+    sellers: 'particuliers',
+    query: 'ordinateur',
+    sort: 'date',
+    titles_only: false,
+    urgent_only: false
+};
+
+lbc.search(req, 1, 5) // browse pages 1 to 5
+.then(function(items) {
+    console.log(items);
+}, function(error) {
+    console.error(error);
+});
+```
+
+Get data from a specific advertisement : 
+```javascript
+const lbc = require('leboncoin');
+
+const req = {
+    category: 'informatique',
+    type: 'offres',
+    location: 'aquitaine',
+    sellers: 'particuliers',
+    query: 'ordinateur',
+    sort: 'date',
+    titles_only: false,
+    urgent_only: false
+};
+
+lbc.get('informatique', 1159809960)
+.then(function(item) {
+    console.log(item);
+}, function(error) {
+    console.error(error);
+});
+```
+
+Watch new objects from a specific category and location :
+```javascript
+const lbc = require('leboncoin');
+
+const req = {
+    category: 'informatique',
+    location: 'aquitaine'
+};
+
+lbc.watch(req, 60, function(item) { // the request is performed every 60 seconds
+    console.log(item);
+});
+```
 
 ### Methods
 
@@ -57,111 +118,111 @@ urgent_only | boolean | search only for urgent ads | false
 -------
 ### Category list
 
-```
+```javascript
 const CATEGORIES = [
-	'_emploi_',
-	'offres_d_emploi',
-	'_vehicules_',
-	'voitures',
-	'motos',
-	'caravaning',
-	'utilitaires',
-	'equipement_auto',
-	'equipement_moto',
-	'equipement_caravaning',
-	'nautisme',
-	'equipement_nautisme',
-	'_immobilier_',
-	'ventes_immobilieres',
-	'locations',
-	'colocations',
-	'bureaux_commerces',
-	'_vacances_',
-	'locations_gites',
-	'chambres_d_hotes',
-	'campings',
-	'hotels',
-	'hebergements_insolites',
-	'_maison_',
-	'ameublement',
-	'electromenager',
-	'arts_de_la_table',
-	'decoration',
-	'linge_de_maison',
-	'bricolage',
-	'jardinage',
-	'vetements',
-	'chaussures',
-	'accessoires_bagagerie',
-	'montres_bijoux',
-	'equipement_bebe',
-	'vetements_bebe',
-	'_multimedia_',
-	'informatique',
-	'consoles_jeux_video',
-	'image_son',
-	'telephonie',
-	'_loisirs',
-	'dvd_films',
-	'cd_musique',
-	'livres',
-	'animaux',
-	'velos',
-	'sports_hobbies',
-	'instruments_de_musique',
-	'collection',
-	'jeux_jouets',
-	'vins_gastronomie',
-	'_materiel_professionnel',
-	'materiel_agricole',
-	'transport_manutention',
-	'btp_chantier_gros_oeuvre',
-	'outillage_materiaux_2nd_oeuvre',
-	'equipements_industriels',
-	'restauration_hotellerie',
-	'founitures_de_bureau',
-	'commerces_marches',
-	'materiel_medical',
-	'_services_',
-	'prestations_de_service',
-	'billeterie',
-	'evenements',
-	'cours_particuliers',
-	'covoiturage',
-	'_',
-	'autres'
+    '_emploi_',
+    'offres_d_emploi',
+    '_vehicules_',
+    'voitures',
+    'motos',
+    'caravaning',
+    'utilitaires',
+    'equipement_auto',
+    'equipement_moto',
+    'equipement_caravaning',
+    'nautisme',
+    'equipement_nautisme',
+    '_immobilier_',
+    'ventes_immobilieres',
+    'locations',
+    'colocations',
+    'bureaux_commerces',
+    '_vacances_',
+    'locations_gites',
+    'chambres_d_hotes',
+    'campings',
+    'hotels',
+    'hebergements_insolites',
+    '_maison_',
+    'ameublement',
+    'electromenager',
+    'arts_de_la_table',
+    'decoration',
+    'linge_de_maison',
+    'bricolage',
+    'jardinage',
+    'vetements',
+    'chaussures',
+    'accessoires_bagagerie',
+    'montres_bijoux',
+    'equipement_bebe',
+    'vetements_bebe',
+    '_multimedia_',
+    'informatique',
+    'consoles_jeux_video',
+    'image_son',
+    'telephonie',
+    '_loisirs',
+    'dvd_films',
+    'cd_musique',
+    'livres',
+    'animaux',
+    'velos',
+    'sports_hobbies',
+    'instruments_de_musique',
+    'collection',
+    'jeux_jouets',
+    'vins_gastronomie',
+    '_materiel_professionnel',
+    'materiel_agricole',
+    'transport_manutention',
+    'btp_chantier_gros_oeuvre',
+    'outillage_materiaux_2nd_oeuvre',
+    'equipements_industriels',
+    'restauration_hotellerie',
+    'founitures_de_bureau',
+    'commerces_marches',
+    'materiel_medical',
+    '_services_',
+    'prestations_de_service',
+    'billeterie',
+    'evenements',
+    'cours_particuliers',
+    'covoiturage',
+    '_',
+    'autres'
 ];
 ```
 -------
 ### Location list
 
-```
+```javascript
 const LOCATIONS = [
-	'alsace',
-	'aquitaine',
-	'auvergne',
-	'basse_normandie',
-	'bourgogne',
-	'bretagne',
-	'centre',
-	'champagne_ardenne',
-	'corse',
-	'franche_comte',
-	'haute_normandie',
-	'ile_de_france',
-	'languedoc_roussillon',
-	'limousin',
-	'lorraine',
-	'midi_pyrenees',
-	'nord_pas_de_calais',
-	'pays_de_la_loire',
-	'picardie',
-	'poitou_charentes',
-	'provence_alpes_cotes_d_azur',
-	'rhone_alpes',
-	'guadeloupe',
-	'martinique',
-	'guyane',
-	'reunion'
+    'alsace',
+    'aquitaine',
+    'auvergne',
+    'basse_normandie',
+    'bourgogne',
+    'bretagne',
+    'centre',
+    'champagne_ardenne',
+    'corse',
+    'franche_comte',
+    'haute_normandie',
+    'ile_de_france',
+    'languedoc_roussillon',
+    'limousin',
+    'lorraine',
+    'midi_pyrenees',
+    'nord_pas_de_calais',
+    'pays_de_la_loire',
+    'picardie',
+    'poitou_charentes',
+    'provence_alpes_cotes_d_azur',
+    'rhone_alpes',
+    'guadeloupe',
+    'martinique',
+    'guyane',
+    'reunion'
 ];
 ```
