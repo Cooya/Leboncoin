@@ -3,108 +3,7 @@ const request = require('request');
 const sleep = require('system-sleep');
 
 const PREFIX = 'https://www.leboncoin.fr/';
-const CATEGORIES = [
-	'_emploi_',
-	'offres_d_emploi',
-	'_vehicules_',
-	'voitures',
-	'motos',
-	'caravaning',
-	'utilitaires',
-	'equipement_auto',
-	'equipement_moto',
-	'equipement_caravaning',
-	'nautisme',
-	'equipement_nautisme',
-	'_immobilier_',
-	'ventes_immobilieres',
-	'locations',
-	'colocations',
-	'bureaux_commerces',
-	'_vacances_',
-	'locations_gites',
-	'chambres_d_hotes',
-	'campings',
-	'hotels',
-	'hebergements_insolites',
-	'_maison_',
-	'ameublement',
-	'electromenager',
-	'arts_de_la_table',
-	'decoration',
-	'linge_de_maison',
-	'bricolage',
-	'jardinage',
-	'vetements',
-	'chaussures',
-	'accessoires_bagagerie',
-	'montres_bijoux',
-	'equipement_bebe',
-	'vetements_bebe',
-	'_multimedia_',
-	'informatique',
-	'consoles_jeux_video',
-	'image_son',
-	'telephonie',
-	'_loisirs',
-	'dvd_films',
-	'cd_musique',
-	'livres',
-	'animaux',
-	'velos',
-	'sports_hobbies',
-	'instruments_de_musique',
-	'collection',
-	'jeux_jouets',
-	'vins_gastronomie',
-	'_materiel_professionnel',
-	'materiel_agricole',
-	'transport_manutention',
-	'btp_chantier_gros_oeuvre',
-	'outillage_materiaux_2nd_oeuvre',
-	'equipements_industriels',
-	'restauration_hotellerie',
-	'founitures_de_bureau',
-	'commerces_marches',
-	'materiel_medical',
-	'_services_',
-	'prestations_de_service',
-	'billeterie',
-	'evenements',
-	'cours_particuliers',
-	'covoiturage',
-	'_',
-	'autres'
-];
-const TYPES = ['offres', 'demandes'];
-const LOCATIONS = [
-	'alsace',
-	'aquitaine',
-	'auvergne',
-	'basse_normandie',
-	'bourgogne',
-	'bretagne',
-	'centre',
-	'champagne_ardenne',
-	'corse',
-	'franche_comte',
-	'haute_normandie',
-	'ile_de_france',
-	'languedoc_roussillon',
-	'limousin',
-	'lorraine',
-	'midi_pyrenees',
-	'nord_pas_de_calais',
-	'pays_de_la_loire',
-	'picardie',
-	'poitou_charentes',
-	'provence_alpes_cotes_d_azur',
-	'rhone_alpes',
-	'guadeloupe',
-	'martinique',
-	'guyane',
-	'reunion'
-];
+const PARAMETERS = require('./parameters.json');
 
 function convertRequestToUrl(request) {
 	let url = PREFIX;
@@ -151,23 +50,26 @@ function checkId(id) {
 
 function checkCategory(category) {
 	category = category.toLowerCase();
-	if(CATEGORIES.indexOf(category) == -1)
+	if(PARAMETERS.categories.indexOf(category) == -1)
 		throw 'Invalid category "' + category + '", check out the doc for know all the valid categories.';
 	return category;
 }
 
 function checkType(type) {
 	type = type.toLowerCase();
-	if(TYPES.indexOf(type) == -1)
+	if(PARAMETERS.types.indexOf(type) == -1)
 		throw 'Invalid type "' + type + '", types accepted : "offres" & "demandes".';
 	return type;
 }
 
 function checkLocation(location) {
 	location = location.toLowerCase();
-	if(LOCATIONS.indexOf(location) == -1)
-		throw 'Invalid location "' + location + '", check out the doc for know all the possible locations.';
-	return location;
+	if(PARAMETERS.locations[location])
+		return location;
+	for(let region of Object.keys(PARAMETERS.locations))
+		if(PARAMETERS.locations[region].indexOf(location) != -1)
+			return region + '/' + location;
+	throw 'Invalid location "' + location + '", check out the doc for know all the possible locations.';
 }
 
 function checkSellers(sellers) {
@@ -209,6 +111,26 @@ function checkUrgentOnly(urgentOnly) {
 	return urgentOnly ? 'ur=1' : '';
 }
 
+function getPhoneNumber(itemId, callback) {
+	request.post({
+		url: 'https://api.leboncoin.fr/api/utils/phonenumber.json',
+		form: {
+			list_id: itemId,
+			app_id: 'leboncoin_web_utils',
+			key: '54bb0281238b45a03f0ee695f73e704f',
+			text: 1
+		}
+	},
+	function(error, response, html) {
+		if(error)
+			callback(null);
+		else {
+			const json = JSON.parse(response.body);
+			callback((!json || !json.utils || !json.utils.phonenumber) ? null : json.utils.phonenumber);
+		}
+	});
+}
+
 function sendSearchRequest(url, data) {
 	return new Promise(function(resolve, reject) {
 		request(url, function(error, response, html) {
@@ -223,6 +145,11 @@ function sendSearchRequest(url, data) {
 				const category = infos.first().text().trim();
 				const url = $(this).attr('href');
 				const thumbnail = $(this).find('.item_imagePic > span').first().attr('data-imgsrc');
+				const mainImage = !thumbnail ? null : {
+					thumbnail: thumbnail,
+					medium: thumbnail.replace('ad-thumb', 'ad-image'),
+					large: thumbnail.replace('ad-thumb', 'ad-large')
+				}
 				data.push({
 					id: url.match(/[0-9]{10}/)[0],
 					title: $(this).find('.item_title').text().trim(),
@@ -231,11 +158,7 @@ function sendSearchRequest(url, data) {
 					location: infos.eq(1).text().replace(/(?:\r\n|\r|\n|  )/g, '').trim(),
 					price: Number($(this).find('.item_price').text().replace(/€| /g, '').trim()),
 					date: $(this).find('aside.item_absolute').text().replace('Urgent', '').trim(),
-					main_image: {
-						thumbnail: thumbnail,
-						medium: thumbnail.replace('ad-thumb', 'ad-image'),
-						large: thumbnail.replace('ad-thumb', 'ad-large')
-					},
+					main_image: mainImage,
 					number_of_images: Number($(this).find('.item_imageNumber').text()),
 					urgent: !!$(this).find('.emergency').length,
 					booster: !!$('.icon-booster').length,
@@ -257,8 +180,12 @@ function sendItemRequest(url) {
 			}
 
 			const $ = cheerio.load(html);
-			const sellerInfo = $('.line_pro');
 			const title = $('h1').text().trim();
+			if(title == 'Cette annonce est désactivée')
+				return resolve({});
+
+			const id =  url.match(/[0-9]{10}/)[0];
+			const sellerInfo = $('.line_pro');
 			const thumbnails = $('script').eq(12).html().match(/https:\/\/img[0-9]\.leboncoin\.fr\/ad-thumb.+\.jpg/g);
 			const images = [];
 			thumbnails.forEach(function(thumbnail) {
@@ -268,11 +195,10 @@ function sendItemRequest(url) {
 					large: thumbnail.replace('ad-thumb', 'ad-large')
 				});
 			});
-			if(title == 'Cette annonce est désactivée')
-				resolve({});
-			else
+			
+			getPhoneNumber(id, function(phoneNumber) {	
 				resolve({
-					id: url.match(/[0-9]{10}/)[0],
+					id: id,
 					title: title,
 					url: url,
 					category: $('#main nav li:nth-child(3)').text().trim(),
@@ -282,11 +208,13 @@ function sendItemRequest(url) {
 					number_of_images: Number($('.item_photo').text().replace('photos disponibles', '').trim()),
 					images: images,
 					seller: $('.mbs > p.title').text().trim(),
+					phone_number: phoneNumber,
 					contact_seller: 'https:' + sellerInfo.last().find('a').attr('href'),
 					description: $('.properties_description .value').text().replace('<br>', '\n').trim(),
 					booster: !!$('.icon-booster').length,
 					is_pro: !!$('.ad_pro').length
 				});
+			});
 		});
 	});
 }

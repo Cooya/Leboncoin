@@ -3,7 +3,7 @@ const lbc = require('./leboncoin');
 const req = {
 	category: 'informatique',
 	type: 'offres', // 'offres' || 'demandes'
-	location: 'aquitaine',
+	location: 'gironde',
 	sellers: 'particuliers', // 'tous' || 'particuliers' || 'professionnels'
 	query: 'ssd', // string
 	sort: 'date', // 'date' || 'prix'
@@ -18,7 +18,7 @@ const req = {
 	console.error(error);
 });*/
 
-lbc.get('informatique', 1311335547)
+lbc.get('ameublement', 1329803102)
 .then(function(item) {
 	console.log(item);
 }, function(error) {

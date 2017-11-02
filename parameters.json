@@ -1,0 +1,222 @@
+{
+	"types": [
+		"offres",
+		"demandes"
+	],
+	"locations": {
+		"alsace": [
+			"bas_rhin",
+			"haut_rhin"
+		],
+		"aquitaine": [
+			"dordogne",
+			"gironde",
+			"landes",
+			"lot_et_garonne",
+			"pyrenees_atlantiques"
+		],
+		"auvergne": [
+			"allier",
+			"cantal",
+			"haute_loire",
+			"puy_de_dome"
+		],
+		"basse_normandie": [
+			"calvados",
+			"manche",
+			"orne"
+		],
+		"bourgogne": [
+			"cote_d_or",
+			"nievre",
+			"saone_et_loire",
+			"yonne"
+		],
+		"bretagne": [
+			"cotes_d_armor",
+			"finistere",
+			"ille_et_vilaine",
+			"morbihan"
+		],
+		"centre": [
+			"cher",
+			"eure_et_loire",
+			"indre",
+			"indre_et_loire",
+			"loir_et_cher",
+			"loiret"
+		],
+		"champagne_ardenne": [
+			"ardennes",
+			"aube",
+			"marne",
+			"haute_marne"
+		],
+		"corse": [],
+		"franche_comte": [
+			"doubs",
+			"jura",
+			"haute_saone",
+			"territoire_de_belfort"
+		],
+		"haute_normandie": [
+			"eure",
+			"seine_maritime"
+		],
+		"ile_de_france": [
+			"paris",
+			"seine_et_marne",
+			"yvelines",
+			"essones",
+			"hauts_de_seine",
+			"seine_saint_denis",
+			"val_de_marne",
+			"val_d_oise"
+		],
+		"languedoc_roussillon": [
+			"aude",
+			"gard",
+			"herault",
+			"lozere",
+			"pyrenees_orientales"
+		],
+		"limousin": [
+			"correze",
+			"creuse",
+			"haute_vienne"
+		],
+		"lorraine": [
+			"meurthe_et_moselle",
+			"meuse",
+			"moselle",
+			"vosges"
+		],
+		"midi_pyrenees": [
+			"ariege",
+			"aveyron",
+			"haute_garonne",
+			"gers",
+			"lot",
+			"hautes_pyrenees",
+			"tarn",
+			"tarn_et_garonne"
+		],
+		"nord_pas_de_calais": [
+			"nord",
+			"pas_de_calais"
+		],
+		"pays_de_la_loire": [
+			"loire_atlantique",
+			"maine_et_loire",
+			"mayenne",
+			"sarthe",
+			"vendee"
+		],
+		"picardie": [
+			"aisne",
+			"oise",
+			"somme"
+		],
+		"poitou_charentes": [
+			"charente",
+			"charente_maritime",
+			"deux_sevres",
+			"vienne"
+		],
+		"provence_alpes_cotes_d_azur": [
+			"alpes_de_haute_provence",
+			"hautes_alpes",
+			"alpes_maritime",
+			"bouches_du_rhone",
+			"var",
+			"vaucluse"
+		],
+		"rhone_alpes": [
+			"ain",
+			"ardeche",
+			"drome",
+			"isere",
+			"loire",
+			"rhone",
+			"savoie",
+			"haute_savoie"
+		],
+		"guadeloupe": [],
+		"martinique": [],
+		"guyane": [],
+		"reunion": []
+	},
+	"categories": [
+		"_emploi_",
+		"offres_d_emploi",
+		"_vehicules_",
+		"voitures",
+		"motos",
+		"caravaning",
+		"utilitaires",
+		"equipement_auto",
+		"equipement_moto",
+		"equipement_caravaning",
+		"nautisme",
+		"equipement_nautisme",
+		"_immobilier_",
+		"ventes_immobilieres",
+		"locations",
+		"colocations",
+		"bureaux_commerces",
+		"_vacances_",
+		"locations_gites",
+		"chambres_d_hotes",
+		"campings",
+		"hotels",
+		"hebergements_insolites",
+		"_maison_",
+		"ameublement",
+		"electromenager",
+		"arts_de_la_table",
+		"decoration",
+		"linge_de_maison",
+		"bricolage",
+		"jardinage",
+		"vetements",
+		"chaussures",
+		"accessoires_bagagerie",
+		"montres_bijoux",
+		"equipement_bebe",
+		"vetements_bebe",
+		"_multimedia_",
+		"informatique",
+		"consoles_jeux_video",
+		"image_son",
+		"telephonie",
+		"_loisirs",
+		"dvd_films",
+		"cd_musique",
+		"livres",
+		"animaux",
+		"velos",
+		"sports_hobbies",
+		"instruments_de_musique",
+		"collection",
+		"jeux_jouets",
+		"vins_gastronomie",
+		"_materiel_professionnel",
+		"materiel_agricole",
+		"transport_manutention",
+		"btp_chantier_gros_oeuvre",
+		"outillage_materiaux_2nd_oeuvre",
+		"equipements_industriels",
+		"restauration_hotellerie",
+		"founitures_de_bureau",
+		"commerces_marches",
+		"materiel_medical",
+		"_services_",
+		"prestations_de_service",
+		"billeterie",
+		"evenements",
+		"cours_particuliers",
+		"covoiturage",
+		"_",
+		"autres"
+	]
+}
