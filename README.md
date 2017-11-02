@@ -32,12 +32,12 @@ Second search example :
 const lbc = require('leboncoin');
 
 const req = {
-	category: 'informatique',
-    city_or_postal_code: '75001'
-	filters: {
-		'Prix min': 400,
-		'Prix max': 'Plus de 1000'
-	}
+   category: 'informatique',
+   city_or_postal_code: '75001'
+   filters: {
+       'Prix min': 400,
+       'Prix max': 'Plus de 1000'
+   }
 };
 
 lbc.search(req) // only the first page
@@ -115,16 +115,16 @@ action | function | action to execute for process the new object data | required
 
 Field | Type    | Description | Default value
 --------  | ---     | --- | ---
-category | string | category to look in (check out the "parameters.json" for the complete list of categories) | "tous"
+category | string | category to look in (check out the [parameters.json](https://github.com/Cooya/Leboncoin/blob/master/parameters.json) for the complete list of categories) | "tous"
 type | string | type of advertisement ("offres" or "demandes") | "offres"
-region_or_department | string | region or department of items (check out the "parameters.json" for the complete list of locations) | "toute la France"
+region_or_department | string | region or department of items (check out the [parameters.json](https://github.com/Cooya/Leboncoin/blob/master/parameters.json) for the complete list of locations) | "toute la France"
 city_or_postal_code | string | city or postal code of items (return empty array if it does not exist) | none
 sellers | string | type of sellers ("tous" or "particuliers" or "professionnels" | "tous"
 query | string | matching keywords | none
 sort | string | sort criteria ("date" or "prix") | "date"
 titles_only | boolean | search only in ad titles | false
 urgent_only | boolean | search only for urgent ads | false
-filters: | object | object containing some filters depending on the category (check out the "parameters.json" for the complete list of filters)
+filters: | object | object containing some filters depending on the category (check out the [parameters.json](https://github.com/Cooya/Leboncoin/blob/master/parameters.json) for the complete list of filters) | {}
 
 -------
 Filters not implemented yet :
