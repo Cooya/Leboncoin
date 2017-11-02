@@ -1,4 +1,4 @@
-const lbc = require('./leboncoin');
+const lbc = require('./client');
 
 const req = {
     category: 'informatique',
@@ -13,7 +13,7 @@ const req = {
 
 const req2 = {
 	category: 'informatique',
-    city_or_postal_code: '75001'
+    city_or_postal_code: '75001',
 	filters: {
 		'Prix min': 400,
 		'Prix max': 'Plus de 1000'
