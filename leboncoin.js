@@ -1,3 +1,8 @@
+// Missing parameters :
+// Modèles (voitures)
+// Dates (vacances)
+// Tailles (vêtements)
+
 const cheerio = require('cheerio');
 const request = require('request');
 const sleep = require('system-sleep');
@@ -16,10 +21,10 @@ function convertRequestToUrl(request) {
 	if(request.type)
 		url += checkType(request.type) + '/';
 	else
-		url += TYPES[0];
+		url += PARAMETERS.types[0];
 
-	if(request.location)
-		url += checkLocation(request.location) + '/';	
+	if(request.region_or_department)
+		url += checkRegionOrDepartment(request.region_or_department) + '/';
 
 	url += '?';
 
@@ -38,6 +43,12 @@ function convertRequestToUrl(request) {
 	if(request.urgent_only)
 		url += checkUrgentOnly(request.urgent_only) + '&';
 
+	if(request.city_or_postal_code)
+		url += checkCityOrPostalCode(request.city_or_postal_code) + '&';
+
+	if(request.filters)
+		url += checkFilters(request.filters, request.category) + '&';
+
 	return url;
 }
 
@@ -50,8 +61,8 @@ function checkId(id) {
 
 function checkCategory(category) {
 	category = category.toLowerCase();
-	if(PARAMETERS.categories.indexOf(category) == -1)
-		throw 'Invalid category "' + category + '", check out the doc for know all the valid categories.';
+	if(!PARAMETERS.categories[category] == -1)
+		throw 'Invalid category "' + category + '", check out the "parameters.json" file for know all the valid categories.';
 	return category;
 }
 
@@ -62,14 +73,14 @@ function checkType(type) {
 	return type;
 }
 
-function checkLocation(location) {
-	location = location.toLowerCase();
-	if(PARAMETERS.locations[location])
-		return location;
-	for(let region of Object.keys(PARAMETERS.locations))
-		if(PARAMETERS.locations[region].indexOf(location) != -1)
-			return region + '/' + location;
-	throw 'Invalid location "' + location + '", check out the doc for know all the possible locations.';
+function checkRegionOrDepartment(regionOrDepartment) {
+	regionOrDepartment = regionOrDepartment.toLowerCase();
+	if(PARAMETERS.regionOrDepartment[regionOrDepartment])
+		return regionOrDepartment;
+	for(let region of Object.keys(PARAMETERS.regionOrDepartment))
+		if(PARAMETERS.regionOrDepartment[region].indexOf(regionOrDepartment) != -1)
+			return region + '/' + regionOrDepartment;
+	throw 'Invalid region or department "' + regionOrDepartment + '", check out the "parameters.json" file for know all the possible regions or departments.';
 }
 
 function checkSellers(sellers) {
@@ -109,6 +120,36 @@ function checkUrgentOnly(urgentOnly) {
 	if(typeof urgentOnly !== 'boolean')
 		throw 'The "urgent_only" parameter must be a boolean.';
 	return urgentOnly ? 'ur=1' : '';
+}
+
+function checkCityOrPostalCode(cityOrPostalCode) {
+	if(typeof cityOrPostalCode !== 'string')
+		throw 'The "city_or_postal_code" parameter must be a string.';
+	return 'location=' +  cityOrPostalCode.toLowerCase();
+}
+
+function checkFilters(filters, category) {
+	if(typeof filters !== 'object')
+		throw 'The "filters" parameters must be a object.';
+	if(!category)
+		throw 'A category must be specified for use the "filters" parameter.';
+	let str = '';
+	let filter;
+	let value;
+	for(let filterName of Object.keys(filters)) {
+		filter = PARAMETERS.categories[category][filterName];
+		if(!filter)
+			throw 'The filter name "' + filterName + '" is invalid for this category, check out the "parameters.json" file for more information.';
+
+		filters[filterName] = numberWithSpaces(filters[filterName]);
+		value = PARAMETERS.categories[category][filterName].values[filters[filterName]];
+		if(!value || value === 'undefined')
+			throw 'The value "' + filters[filterName] + '" is invalid for the filter "' + filterName + '", check out the "parameters.json" file for more information.';
+
+		str += filter.id + '=' + value + '&';
+	}
+
+	return str;
 }
 
 function getPhoneNumber(itemId, callback) {
@@ -233,6 +274,10 @@ function promiseWait(seconds) {
 		sleep(seconds * 1000);
 		resolve();
 	});
+}
+
+function numberWithSpaces(number) {
+	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 }
 
 module.exports = {
