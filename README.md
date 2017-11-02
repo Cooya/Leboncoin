@@ -11,7 +11,7 @@ const lbc = require('leboncoin');
 const req = {
     category: 'informatique',
     type: 'offres',
-    location: 'aquitaine',
+    region_or_department: 'cantal',
     sellers: 'particuliers',
     query: 'ordinateur',
     sort: 'date',
@@ -27,20 +27,30 @@ lbc.search(req, 1, 5) // browse pages 1 to 5
 });
 ```
 
-Get data from a specific advertisement : 
+Second search example :
 ```javascript
 const lbc = require('leboncoin');
 
 const req = {
-    category: 'informatique',
-    type: 'offres',
-    location: 'aquitaine',
-    sellers: 'particuliers',
-    query: 'ordinateur',
-    sort: 'date',
-    titles_only: false,
-    urgent_only: false
+	category: 'informatique',
+    city_or_postal_code: '75001'
+	filters: {
+		'Prix min': 400,
+		'Prix max': 'Plus de 1000'
+	}
 };
+
+lbc.search(req) // only the first page
+.then(function(items) {
+    console.log(items);
+}, function(error) {
+    console.error(error);
+});
+```
+
+Get data from a specific advertisement : 
+```javascript
+const lbc = require('leboncoin');
 
 lbc.get('informatique', 1159809960)
 .then(function(item) {
@@ -56,7 +66,7 @@ const lbc = require('leboncoin');
 
 const req = {
     category: 'informatique',
-    location: 'aquitaine'
+    region_or_department: 'gers'
 };
 
 lbc.watch(req, 60, function(item) { // the request is performed every 60 seconds
@@ -105,124 +115,21 @@ action | function | action to execute for process the new object data | required
 
 Field | Type    | Description | Default value
 --------  | ---     | --- | ---
-category | string | category to look in (see category list below) | "tous"
+category | string | category to look in (check out the "parameters.json" for the complete list of categories) | "tous"
 type | string | type of advertisement ("offres" or "demandes") | "offres"
-location | string | location of the item (see location list below) | "dans toute la France"
+region_or_department | string | region or department of items (check out the "parameters.json" for the complete list of locations) | "toute la France"
+city_or_postal_code | string | city or postal code of items (return empty array if it does not exist) | none
 sellers | string | type of sellers ("tous" or "particuliers" or "professionnels" | "tous"
 query | string | matching keywords | none
-sort | string | sort criteria ("date" or "prix") | "date" 
-titles_only | boolean | search only in ad titles | false 
+sort | string | sort criteria ("date" or "prix") | "date"
+titles_only | boolean | search only in ad titles | false
 urgent_only | boolean | search only for urgent ads | false
-
+filters: | object | object containing some filters depending on the category (check out the "parameters.json" for the complete list of filters)
 
 -------
-### Category list
+Filters not implemented yet :
+* Car models (depending on the brand)
+* Dates ("holidays" categories)
+* Clothes sizes (depending on the gender)
 
-```javascript
-const CATEGORIES = [
-    '_emploi_',
-    'offres_d_emploi',
-    '_vehicules_',
-    'voitures',
-    'motos',
-    'caravaning',
-    'utilitaires',
-    'equipement_auto',
-    'equipement_moto',
-    'equipement_caravaning',
-    'nautisme',
-    'equipement_nautisme',
-    '_immobilier_',
-    'ventes_immobilieres',
-    'locations',
-    'colocations',
-    'bureaux_commerces',
-    '_vacances_',
-    'locations_gites',
-    'chambres_d_hotes',
-    'campings',
-    'hotels',
-    'hebergements_insolites',
-    '_maison_',
-    'ameublement',
-    'electromenager',
-    'arts_de_la_table',
-    'decoration',
-    'linge_de_maison',
-    'bricolage',
-    'jardinage',
-    'vetements',
-    'chaussures',
-    'accessoires_bagagerie',
-    'montres_bijoux',
-    'equipement_bebe',
-    'vetements_bebe',
-    '_multimedia_',
-    'informatique',
-    'consoles_jeux_video',
-    'image_son',
-    'telephonie',
-    '_loisirs',
-    'dvd_films',
-    'cd_musique',
-    'livres',
-    'animaux',
-    'velos',
-    'sports_hobbies',
-    'instruments_de_musique',
-    'collection',
-    'jeux_jouets',
-    'vins_gastronomie',
-    '_materiel_professionnel',
-    'materiel_agricole',
-    'transport_manutention',
-    'btp_chantier_gros_oeuvre',
-    'outillage_materiaux_2nd_oeuvre',
-    'equipements_industriels',
-    'restauration_hotellerie',
-    'founitures_de_bureau',
-    'commerces_marches',
-    'materiel_medical',
-    '_services_',
-    'prestations_de_service',
-    'billeterie',
-    'evenements',
-    'cours_particuliers',
-    'covoiturage',
-    '_',
-    'autres'
-];
-```
--------
-### Location list
-
-```javascript
-const LOCATIONS = [
-    'alsace',
-    'aquitaine',
-    'auvergne',
-    'basse_normandie',
-    'bourgogne',
-    'bretagne',
-    'centre',
-    'champagne_ardenne',
-    'corse',
-    'franche_comte',
-    'haute_normandie',
-    'ile_de_france',
-    'languedoc_roussillon',
-    'limousin',
-    'lorraine',
-    'midi_pyrenees',
-    'nord_pas_de_calais',
-    'pays_de_la_loire',
-    'picardie',
-    'poitou_charentes',
-    'provence_alpes_cotes_d_azur',
-    'rhone_alpes',
-    'guadeloupe',
-    'martinique',
-    'guyane',
-    'reunion'
-];
-```
+Feel free to contact me for any suggestion, issue, improvement...
