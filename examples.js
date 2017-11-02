@@ -1,19 +1,23 @@
 const lbc = require('./leboncoin');
 
 const req = {
+    category: 'informatique',
+    type: 'offres',
+    region_or_department: 'cantal',
+    sellers: 'particuliers',
+    query: 'ordinateur',
+    sort: 'date',
+    titles_only: false,
+    urgent_only: false
+};
+
+const req2 = {
 	category: 'informatique',
-	type: 'offres', // 'offres' || 'demandes'
-	//region_or_department: 'cantal',
-	sellers: 'particuliers', // 'tous' || 'particuliers' || 'professionnels'
-	query: 'ssd', // string
-	sort: 'date', // 'date' || 'prix'
-	titles_only: false, // true || false
-	urgent_only: false, // true || false
+    city_or_postal_code: '75001'
 	filters: {
 		'Prix min': 400,
 		'Prix max': 'Plus de 1000'
-	},
-	'city_or_postal_code': '75001'
+	}
 };
 
 lbc.search(req)

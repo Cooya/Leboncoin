@@ -1,8 +1,3 @@
-// Missing parameters :
-// Modèles (voitures)
-// Dates (vacances)
-// Tailles (vêtements)
-
 const cheerio = require('cheerio');
 const request = require('request');
 const sleep = require('system-sleep');
@@ -192,7 +187,7 @@ function sendSearchRequest(url, data) {
 					large: thumbnail.replace('ad-thumb', 'ad-large')
 				}
 				data.push({
-					id: url.match(/[0-9]{10}/)[0],
+					id: url.match(/[0-9]{9,10}/)[0],
 					title: $(this).find('.item_title').text().trim(),
 					url: 'https:' + url,
 					category: category ? category : null,
