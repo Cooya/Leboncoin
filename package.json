@@ -1,5 +1,5 @@
 {
-  "name": "leboncoin",
+  "name": "leboncoin-client",
   "version": "0.2.0",
   "description": "HTTP client for leboncoin.fr french e-commerce website",
   "main": "examples.js",
