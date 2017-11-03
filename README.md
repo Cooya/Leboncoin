@@ -83,7 +83,7 @@ lbc.watch(req, 60, function(item) { // the request is performed every 60 seconds
 
 ### search(request, minPage, maxPage)
 
-<sub>Query a research of items specified by various criterias. Return a promise with an array of items in parameter.</sub>
+Query a research of items specified by various criterias. Return a promise with an array of items in parameter.
 
 Parameter | Type    | Description | Default value
 --------  | ---     | --- | ---
