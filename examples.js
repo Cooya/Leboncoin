@@ -20,19 +20,19 @@ const req2 = {
 	}
 };
 
-lbc.search(req)
+/*lbc.search(req)
 .then(function(items) {
 	console.log(items);
 }, function(error) {
 	console.error(error);
-});
+});*/
 
-/*lbc.get('ameublement', 1329803102)
+lbc.get(1324563922)
 .then(function(item) {
 	console.log(item);
 }, function(error) {
 	console.error(error);
-});*/
+});
 
 /*
 lbc.watch(req, 60, function(item) {

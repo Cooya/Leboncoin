@@ -301,9 +301,9 @@ module.exports = {
 		});
 	},
 
-	get: function(category, id) {
+	get: function(id) {
 		try {
-			return sendItemRequest(PREFIX + checkCategory(category) + '/' + checkId(id) + '.htm');
+			return sendItemRequest(PREFIX + 'c/' + checkId(id) + '.htm');
 		}
 		catch(e) {
 			return Promise.reject(e);
