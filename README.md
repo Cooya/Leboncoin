@@ -57,7 +57,7 @@ Get data from a specific advertisement :
 ```javascript
 const lbc = require('leboncoin-client');
 
-lbc.get('informatique', 1159809960)
+lbc.get(1159809960)
 .then(function(item) {
     console.log(item);
 }, function(error) {
@@ -93,13 +93,12 @@ maxPage   | integer | last page to browse | 1
 
 
 -------
-### get(category, id)
+### get(id)
 
-Get specific item data by its category and id. Return a promise with the item data in parameter.
+Get specific item data by its id. Return a promise with the item data in parameter.
 
 Parameter | Type    | Description | Default value
 --------  | ---     | --- | ---
-category  | string | item category (see category list) | required
 id | integer | 10-digit item id | required
 
 
