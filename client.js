@@ -16,7 +16,7 @@ function convertRequestToUrl(request) {
 	if(request.type)
 		url += checkType(request.type) + '/';
 	else
-		url += PARAMETERS.types[0];
+		url += 'offres/';
 
 	if(request.region_or_department)
 		url += checkRegionOrDepartment(request.region_or_department) + '/';
