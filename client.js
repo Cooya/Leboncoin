@@ -49,22 +49,22 @@ function convertRequestToUrl(request) {
 
 function checkId(id) {
 	const str = id.toString();
-	if(!Number.isInteger(id) || str.length != 10)
-		throw 'Invalid id "' + id + '", the "id" parameter must be a 10-digit integer.';
-	return id;
+	if(!parseInt(id) || str.length != 10)
+        throw new Error('Invalid id "' + id + '", the "id" parameter must be a 10-digit integer.');
+	return str;
 }
 
 function checkCategory(category) {
 	category = category.toLowerCase();
-	if(!PARAMETERS.categories[category] == -1)
-		throw 'Invalid category "' + category + '", check out the "parameters.json" file for know all the valid categories.';
+	if(!PARAMETERS.categories[category])
+		throw new Error('Invalid category "' + category + '", check out the "parameters.json" file to know all the valid categories.');
 	return category;
 }
 
 function checkType(type) {
 	type = type.toLowerCase();
 	if(PARAMETERS.types.indexOf(type) == -1)
-		throw 'Invalid type "' + type + '", types accepted : "offres" & "demandes".';
+		throw new Error('Invalid type "' + type + '", types accepted : "offres" & "demandes".');
 	return type;
 }
 
@@ -75,7 +75,7 @@ function checkRegionOrDepartment(regionOrDepartment) {
 	for(let region of Object.keys(PARAMETERS.regionOrDepartment))
 		if(PARAMETERS.regionOrDepartment[region].indexOf(regionOrDepartment) != -1)
 			return region + '/' + regionOrDepartment;
-	throw 'Invalid region or department "' + regionOrDepartment + '", check out the "parameters.json" file for know all the possible regions or departments.';
+	throw new Error('Invalid region or department "' + regionOrDepartment + '", check out the "parameters.json" file to know all the possible regions or departments.');
 }
 
 function checkSellers(sellers) {
@@ -86,13 +86,13 @@ function checkSellers(sellers) {
 		return 'f=p';
 	if(sellers == 'professionnels')
 		return 'f=c';
-	throw 'Invalid sellers "' + sellers + '", sellers accepted : "particuliers" & "professionnels".';
+    throw new Error('Invalid sellers "' + sellers + '", sellers accepted : "particuliers" & "professionnels".');
 }
 
 function checkQuery(query) {
 	query = query.toLowerCase();
 	if(query.length > 100)
-		throw 'The query is too long, max length : 100.';
+        throw new Error('The query is too long, max length : 100.');
 	return 'q=' + query;
 }
 
@@ -102,44 +102,44 @@ function checkSort(sort) {
 		return 'sp=0';
 	if(sort == 'prix')
 		return 'sp=1';
-	throw 'Invalid sort "' + sort + '", sort accepted : "date" & "prix".';
+    throw new Error('Invalid sort "' + sort + '", sort accepted : "date" & "prix".');
 }
 
 function checkTitlesOnly(titlesOnly) {
 	if(typeof titlesOnly !== 'boolean')
-		throw 'The "titles_only" parameter must be a boolean.';
+        throw new Error('The "titles_only" parameter must be a boolean.');
 	return titlesOnly ? 'it=1' : '';
 }
 
 function checkUrgentOnly(urgentOnly) {
 	if(typeof urgentOnly !== 'boolean')
-		throw 'The "urgent_only" parameter must be a boolean.';
+        throw new Error('The "urgent_only" parameter must be a boolean.');
 	return urgentOnly ? 'ur=1' : '';
 }
 
 function checkCityOrPostalCode(cityOrPostalCode) {
 	if(typeof cityOrPostalCode !== 'string')
-		throw 'The "city_or_postal_code" parameter must be a string.';
+        throw new Error('The "city_or_postal_code" parameter must be a string.');
 	return 'location=' +  cityOrPostalCode.toLowerCase();
 }
 
 function checkFilters(filters, category) {
 	if(typeof filters !== 'object')
-		throw 'The "filters" parameters must be a object.';
+        throw new Error('The "filters" parameters must be a object.');
 	if(!category)
-		throw 'A category must be specified for use the "filters" parameter.';
+        throw new Error('A category must be specified to use the "filters" parameter.');
 	let str = '';
 	let filter;
 	let value;
 	for(let filterName of Object.keys(filters)) {
 		filter = PARAMETERS.categories[category][filterName];
 		if(!filter)
-			throw 'The filter name "' + filterName + '" is invalid for this category, check out the "parameters.json" file for more information.';
+            throw new Error('The filter name "' + filterName + '" is invalid for this category, check out the "parameters.json" file for more information.');
 
 		filters[filterName] = numberWithSpaces(filters[filterName]);
 		value = PARAMETERS.categories[category][filterName].values[filters[filterName]];
 		if(!value || value === 'undefined')
-			throw 'The value "' + filters[filterName] + '" is invalid for the filter "' + filterName + '", check out the "parameters.json" file for more information.';
+            throw new Error('The value "' + filters[filterName] + '" is invalid for the filter "' + filterName + '", check out the "parameters.json" file for more information.');
 
 		str += filter.id + '=' + value + '&';
 	}
@@ -185,7 +185,7 @@ function sendSearchRequest(url, data) {
 					thumbnail: thumbnail,
 					medium: thumbnail.replace('ad-thumb', 'ad-image'),
 					large: thumbnail.replace('ad-thumb', 'ad-large')
-				}
+				};
 				data.push({
 					id: url.match(/[0-9]{9,10}/)[0],
 					title: $(this).find('.item_title').text().trim(),
@@ -222,7 +222,7 @@ function sendItemRequest(url) {
 
 			const id =  url.match(/[0-9]{10}/)[0];
 			const sellerInfo = $('.line_pro');
-			const thumbnails = $('script').eq(12).html().match(/https:\/\/img[0-9]\.leboncoin\.fr\/ad-thumb.+\.jpg/g);
+			const thumbnails = $('section.adview_main script').eq(1).html().match(/https:\/\/img[0-9]\.leboncoin\.fr\/ad-thumb.+\.jpg/g);
 			const images = [];
 			thumbnails.forEach(function(thumbnail) {
 				images.push({
@@ -339,4 +339,4 @@ module.exports = {
 			return true;
 		});
 	}
-}
+};
